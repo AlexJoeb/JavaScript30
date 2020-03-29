@@ -31,29 +31,49 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    console.log(`Inventors that were born in the 1500s: `, inventors.filter(inventor => inventor.year >= 1500 && inventor.year <= 1599));
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
-
+    console.log(`All the first and last names of inventors: `, inventors.map(inventor => ({first: inventor.first, last: inventor.last})));
+    
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    console.log(`All the inventors sorted by birthday (oldest to youngest): `, inventors.sort((a, b) => a.year < b.year ? -1 : 1));
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    console.log(`The amount of years the inventors lived, accumulated: `, inventors.reduce((counter, item) => counter + (item.passed - item.year), 0));
+
 
     // 5. Sort the inventors by years lived
+    console.log(`The inventors sorted by how many years they lived: `, inventors.sort((a, b) => (a.passed - a.year) < (b.passed - b.year) ? 1 : -1));
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    /*
+      const mw = document.querySelector('.mw-category');
+      const titles = mw.from(document.querySelector('a')).map(item => item.textContent);
+      const de = titles.filter(title => title.includes('de'));
+    */
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
-
+    console.log(`The people's names sorted alphabetically: `, inventors.sort((a, b) => a.last.split("")[0] > b.last.split("")[0] ? 1 : -1));
+    
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    console.log(`Sum of instances of cars: `, data.reduce((counter, car) => {
+      if(!counter[car]) {
+        counter[car] = 1;
+      }else {
+        counter[car] += 1;
+      }
+      return counter;
+    }, {}));
+  
   </script>
 </body>
 </html>
