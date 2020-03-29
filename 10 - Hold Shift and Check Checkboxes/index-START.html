@@ -96,6 +96,45 @@
   </div>
 
 <script>
+  const itemsArr = document.querySelectorAll('.item');
+  const items = Array.prototype.slice.call(itemsArr);
+  const checkboxArr = document.querySelectorAll('.item input[type="checkbox"]');
+  const checkboxes = Array.prototype.slice.call(checkboxArr);
+
+  let indexOfLastClicked = null;
+  let shift = false;
+
+  const handleClick = event => {
+    const { target } = event;
+    if(shift) {
+      // Shift Logic
+      const indexOfCurrentClicked = checkboxes.indexOf(target);
+      if(indexOfCurrentClicked === indexOfLastClicked) return;
+      
+      if(indexOfCurrentClicked > indexOfLastClicked) {
+        // Current is further down the list.
+        for(let i = indexOfLastClicked; i <= indexOfCurrentClicked; i++){
+          checkboxes[i].checked = true;
+        }
+      } else {
+        // Current is further up the list
+        for(let i = indexOfLastClicked; i >= indexOfCurrentClicked; i--){
+          checkboxes[i].checked = true;
+        }
+      }
+
+    } else {
+      indexOfLastClicked = checkboxes.indexOf(target);
+    }
+  }
+
+  checkboxes.forEach(check => check.addEventListener("click", handleClick));
+
+  document.addEventListener('keydown', event => event.keyCode === 16 ? shift = true : null);
+  document.addEventListener('keyup', event => event.keyCode === 16 ? shift = false : null);
+
+
 </script>
+
 </body>
 </html>
