@@ -26,6 +26,7 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -43,6 +44,12 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+
+      flex: 1;
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -56,6 +63,26 @@
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel > *:first-child {
+      transform: translateY(-100%);
+    }
+
+    .panel.open-active > *:first-child {
+      transform: translateY(0);
+    }
+
+    .panel > *:last-child {
+      transform: translateY(100%);
+    }
+
+    .panel.open-active > *:last-child {
+      transform: translateY(0);
     }
 
     .panel p {
@@ -71,6 +98,7 @@
 
     .panel.open {
       font-size: 40px;
+      flex: 5;
     }
 
   </style>
@@ -105,7 +133,20 @@
   </div>
 
   <script>
+    const panels = document.querySelectorAll('.panel');
 
+    const toggleOpen = (event, panel) => {
+      panel.classList.toggle('open');
+    }
+
+    const toggleActive = (event, panel) => {
+      if(event.propertyName.includes('flex')){
+        panel.classList.toggle('open-active');
+      }
+    }
+
+    panels.forEach(panel => panel.addEventListener('click', (event) => toggleOpen(event, panel)));
+    panels.forEach(panel => panel.addEventListener('transitionend', (event) => toggleActive(event, panel)));
   </script>
 
 
